@@ -43,9 +43,8 @@ export function HeroCanvas() {
 
   return (
     <div className="relative w-full h-full min-h-[420px] md:min-h-[520px]">
-      {/* Background ambient lighting blur circles */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 md:w-96 md:h-96 rounded-full bg-blue-600/15 blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/3 w-60 h-60 rounded-full bg-cyan-500/10 blur-[85px] pointer-events-none" />
+      {/* Background ambient lighting */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/[0.08] via-cyan-500/[0.06] to-transparent blur-3xl pointer-events-none" />
 
       <Canvas
         camera={{ position: [0, 0, 5.2], fov: 45 }}
