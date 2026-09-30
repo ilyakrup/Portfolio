@@ -66,12 +66,12 @@ export function HeroCanvas() {
         <Suspense fallback={null}>
           <ChromeMesh />
           <Sparkles
-            count={45}
+            count={50}
             scale={7.5}
-            size={1.8}
-            speed={0.3}
-            opacity={0.4}
-            color="#94a3b8"
+            size={1.6}
+            speed={0.4}
+            opacity={0.65}
+            color="#38bdf8"
           />
         </Suspense>
       </Canvas>

@@ -98,8 +98,8 @@ export function Hero() {
 
           {/* Interactive hint floating badge */}
           <div className="absolute bottom-2 right-4 pointer-events-none hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg glass-panel text-[11px] font-mono text-zinc-400 border border-white/10 shadow-lg">
-            <Layers className="w-3.5 h-3.5 text-zinc-300" />
-            <span>Интерактивный 3D WebGL • Подвигайте курсором</span>
+            <Layers className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Интерактивный 3D Нейро-мозг • Подвигайте курсором</span>
           </div>
         </motion.div>
       </div>
