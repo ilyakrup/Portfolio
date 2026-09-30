@@ -2,7 +2,7 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Sparkles, Environment } from "@react-three/drei";
+import { Sparkles } from "@react-three/drei";
 import { ChromeMesh } from "./ChromeMesh";
 
 export function HeroCanvas() {
@@ -65,14 +65,13 @@ export function HeroCanvas() {
 
         <Suspense fallback={null}>
           <ChromeMesh />
-          <Environment preset="city" />
           <Sparkles
             count={45}
             scale={7.5}
-            size={2}
-            speed={0.35}
-            opacity={0.6}
-            color="#cbd5e1"
+            size={1.8}
+            speed={0.3}
+            opacity={0.4}
+            color="#94a3b8"
           />
         </Suspense>
       </Canvas>

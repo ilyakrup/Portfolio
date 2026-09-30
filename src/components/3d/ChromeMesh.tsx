@@ -15,13 +15,13 @@ export function ChromeMesh() {
   const ring3Ref = useRef<THREE.Group>(null!);
   const satellitesRef = useRef<THREE.Group>(null!);
 
-  // Generate satellite positions around the orbit
+  // Orbiting micro-satellites
   const satellites = useMemo(() => {
     return [
-      { radius: 2.3, speed: 0.8, offset: 0, size: 0.08, color: "#38bdf8" },
-      { radius: 2.6, speed: -0.6, offset: Math.PI / 3, size: 0.1, color: "#e2e8f0" },
-      { radius: 2.4, speed: 1.1, offset: Math.PI, size: 0.07, color: "#818cf8" },
-      { radius: 2.7, speed: -0.9, offset: (4 * Math.PI) / 3, size: 0.09, color: "#f8fafc" },
+      { radius: 2.2, speed: 0.7, offset: 0, size: 0.06, color: "#38bdf8" },
+      { radius: 2.45, speed: -0.5, offset: Math.PI / 3, size: 0.08, color: "#e2e8f0" },
+      { radius: 2.3, speed: 0.9, offset: Math.PI, size: 0.05, color: "#818cf8" },
+      { radius: 2.55, speed: -0.8, offset: (4 * Math.PI) / 3, size: 0.07, color: "#cbd5e1" },
     ];
   }, []);
 
@@ -29,62 +29,62 @@ export function ChromeMesh() {
     const { pointer, clock } = state;
     const t = clock.getElapsedTime();
 
-    // Smooth responsive tilt to mouse position
+    // Responsive smooth tilt towards mouse
     if (groupRef.current) {
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
-        pointer.y * 0.45,
+        pointer.y * 0.4,
         0.05
       );
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
-        pointer.x * 0.55,
+        pointer.x * 0.5,
         0.05
       );
     }
 
-    // High-poly multifaceted Chrome Core rotation
+    // Core smooth rotation
     if (coreRef.current) {
-      coreRef.current.rotation.x = t * 0.12;
-      coreRef.current.rotation.y = t * 0.18;
+      coreRef.current.rotation.x = t * 0.1;
+      coreRef.current.rotation.y = t * 0.15;
     }
 
-    // Glowing Inner Cyber Octahedron counter-rotation
+    // Inner glowing crystal counter-rotation
     if (innerRef.current) {
-      innerRef.current.rotation.x = -t * 0.25;
-      innerRef.current.rotation.z = t * 0.3;
+      innerRef.current.rotation.x = -t * 0.2;
+      innerRef.current.rotation.z = t * 0.25;
     }
 
-    // Outer Geodesic Tech Wireframe
+    // Outer wireframe cage
     if (wireframeRef.current) {
-      wireframeRef.current.rotation.y = -t * 0.1;
-      wireframeRef.current.rotation.z = t * 0.08;
+      wireframeRef.current.rotation.y = -t * 0.08;
+      wireframeRef.current.rotation.z = t * 0.06;
     }
 
-    // Multi-axis Gyroscopic Orbital Rings
+    // Gyroscopic rings
     if (ring1Ref.current) {
-      ring1Ref.current.rotation.x = Math.PI / 4 + Math.sin(t * 0.4) * 0.15;
-      ring1Ref.current.rotation.y = t * 0.35;
+      ring1Ref.current.rotation.x = Math.PI / 4 + Math.sin(t * 0.3) * 0.12;
+      ring1Ref.current.rotation.y = t * 0.28;
     }
 
     if (ring2Ref.current) {
-      ring2Ref.current.rotation.x = -Math.PI / 3 + Math.cos(t * 0.3) * 0.15;
-      ring2Ref.current.rotation.z = -t * 0.28;
+      ring2Ref.current.rotation.x = -Math.PI / 3 + Math.cos(t * 0.25) * 0.12;
+      ring2Ref.current.rotation.z = -t * 0.22;
     }
 
     if (ring3Ref.current) {
       ring3Ref.current.rotation.y = Math.PI / 6;
-      ring3Ref.current.rotation.z = t * 0.2;
+      ring3Ref.current.rotation.z = t * 0.16;
     }
 
-    // Orbiting micro-satellites
+    // Satellites orbiting
     if (satellitesRef.current) {
       satellitesRef.current.children.forEach((child, i) => {
         const sat = satellites[i];
         if (!sat) return;
         const angle = t * sat.speed + sat.offset;
         child.position.x = Math.cos(angle) * sat.radius;
-        child.position.y = Math.sin(angle * 0.8) * (sat.radius * 0.4);
+        child.position.y = Math.sin(angle * 0.7) * (sat.radius * 0.35);
         child.position.z = Math.sin(angle) * sat.radius;
       });
     }
@@ -93,77 +93,66 @@ export function ChromeMesh() {
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
       <Float
-        speed={1.8}
-        rotationIntensity={0.5}
-        floatIntensity={0.7}
-        floatingRange={[-0.12, 0.12]}
+        speed={1.6}
+        rotationIntensity={0.4}
+        floatIntensity={0.6}
+        floatingRange={[-0.1, 0.1]}
       >
-        {/* 1. INNER GLOWING CYBER CORE */}
-        <mesh ref={innerRef} scale={0.85}>
+        {/* 1. INNER GLOWING HOLOGRAPHIC CORE */}
+        <mesh ref={innerRef} scale={0.75}>
           <octahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
             color="#38bdf8"
             emissive="#0284c7"
-            emissiveIntensity={1.8}
+            emissiveIntensity={2.5}
             wireframe
-            roughness={0.2}
           />
         </mesh>
 
-        {/* 2. MAIN DETAILED FACETED CHROME SPHERE */}
-        <mesh ref={coreRef} scale={1.45}>
-          <icosahedronGeometry args={[1, 3]} />
-          <meshPhysicalMaterial
-            color="#f1f5f9"
-            metalness={0.96}
-            roughness={0.06}
-            clearcoat={1}
-            clearcoatRoughness={0.08}
-            reflectivity={1}
-            ior={1.6}
-            flatShading={false}
+        {/* 2. MAIN SMOOTH SATIN OBSIDIAN-CHROME SPHERE */}
+        {/* Completely smooth sphere without city reflections, only clean studio highlights */}
+        <mesh ref={coreRef} scale={1.38}>
+          <sphereGeometry args={[1, 64, 64]} />
+          <meshStandardMaterial
+            color="#181824"
+            metalness={0.88}
+            roughness={0.24}
           />
         </mesh>
 
-        {/* 3. OUTER GEODESIC WIREFRAME TECH CAGE */}
-        <mesh ref={wireframeRef} scale={1.72}>
+        {/* 3. SUBTLE OUTER WIREFRAME CAGE (Light & Minimalist) */}
+        <mesh ref={wireframeRef} scale={1.62}>
           <icosahedronGeometry args={[1, 2]} />
           <meshStandardMaterial
-            color="#cbd5e1"
+            color="#64748b"
             wireframe
             transparent
-            opacity={0.4}
-            metalness={0.9}
-            roughness={0.1}
+            opacity={0.22}
           />
         </mesh>
 
-        {/* 4. GYROSCOPIC RING 1 with metallic tick notches */}
+        {/* 4. GYROSCOPIC RING 1 */}
         <group ref={ring1Ref}>
-          <mesh scale={2.2}>
-            <torusGeometry args={[1, 0.016, 16, 120]} />
+          <mesh scale={2.15}>
+            <torusGeometry args={[1, 0.012, 16, 100]} />
             <meshStandardMaterial
-              color="#e2e8f0"
-              metalness={0.95}
-              roughness={0.1}
+              color="#94a3b8"
+              metalness={0.9}
+              roughness={0.2}
             />
           </mesh>
-          {/* Tech Nodes along Ring 1 */}
+          {/* Subtle glowing nodes */}
           {[0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2].map((angle, idx) => (
             <mesh
               key={idx}
-              position={[
-                Math.cos(angle) * 2.2,
-                Math.sin(angle) * 2.2,
-                0,
-              ]}
-              scale={0.05}
+              position={[Math.cos(angle) * 2.15, Math.sin(angle) * 2.15, 0]}
+              scale={0.04}
             >
               <sphereGeometry args={[1, 16, 16]} />
               <meshStandardMaterial
                 color="#38bdf8"
                 emissive="#38bdf8"
-                emissiveIntensity={1.5}
+                emissiveIntensity={2}
               />
             </mesh>
           ))}
@@ -171,45 +160,24 @@ export function ChromeMesh() {
 
         {/* 5. GYROSCOPIC RING 2 */}
         <group ref={ring2Ref}>
-          <mesh scale={2.45}>
-            <torusGeometry args={[1, 0.012, 16, 120]} />
+          <mesh scale={2.4}>
+            <torusGeometry args={[1, 0.009, 16, 100]} />
             <meshStandardMaterial
               color="#cbd5e1"
-              metalness={0.98}
-              roughness={0.08}
+              metalness={0.92}
+              roughness={0.15}
             />
           </mesh>
-          {/* Tech Nodes along Ring 2 */}
-          {[Math.PI / 4, (3 * Math.PI) / 4, (5 * Math.PI) / 4, (7 * Math.PI) / 4].map(
-            (angle, idx) => (
-              <mesh
-                key={idx}
-                position={[
-                  Math.cos(angle) * 2.45,
-                  Math.sin(angle) * 2.45,
-                  0,
-                ]}
-                scale={0.045}
-              >
-                <sphereGeometry args={[1, 16, 16]} />
-                <meshStandardMaterial
-                  color="#ffffff"
-                  metalness={0.95}
-                  roughness={0.1}
-                />
-              </mesh>
-            )
-          )}
         </group>
 
-        {/* 6. GYROSCOPIC RING 3 (Outer Horizon Ring) */}
+        {/* 6. GYROSCOPIC RING 3 */}
         <group ref={ring3Ref}>
-          <mesh scale={2.7}>
-            <torusGeometry args={[1, 0.008, 16, 120]} />
+          <mesh scale={2.65}>
+            <torusGeometry args={[1, 0.006, 16, 100]} />
             <meshStandardMaterial
-              color="#94a3b8"
-              metalness={0.9}
-              roughness={0.2}
+              color="#64748b"
+              metalness={0.85}
+              roughness={0.3}
             />
           </mesh>
         </group>
@@ -221,10 +189,10 @@ export function ChromeMesh() {
               <sphereGeometry args={[1, 16, 16]} />
               <meshStandardMaterial
                 color={sat.color}
-                metalness={0.9}
-                roughness={0.1}
+                metalness={0.8}
+                roughness={0.2}
                 emissive={sat.color === "#38bdf8" ? "#0284c7" : "#000000"}
-                emissiveIntensity={sat.color === "#38bdf8" ? 1.2 : 0}
+                emissiveIntensity={sat.color === "#38bdf8" ? 1.5 : 0}
               />
             </mesh>
           ))}
