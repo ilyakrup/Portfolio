@@ -64,7 +64,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="project-card relative group rounded-2xl glass-panel p-6 sm:p-7 transition-colors duration-300 hover:border-white/20 overflow-hidden flex flex-col justify-between h-full min-h-[380px] touch-manipulation"
+        className="relative group rounded-2xl glass-panel p-6 sm:p-7 transition-colors duration-300 hover:border-white/20 overflow-hidden flex flex-col justify-between h-full min-h-[380px]"
       >
         {/* Ambient background accent glow */}
         <div

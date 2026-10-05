@@ -158,7 +158,6 @@ export function ChromeMesh() {
   const pointsRef = useRef<THREE.Points>(null!);
   const linesRef = useRef<THREE.LineSegments>(null!);
   const impulsesRef = useRef<THREE.Points>(null!);
-  const lastColorUpdateRef = useRef(0);
 
   // Generate high-density authentic anatomical neural brain network (1100+ nodes, 4200+ connections)
   const {
@@ -374,7 +373,7 @@ export function ChromeMesh() {
     }
 
     // Synaptic action potentials (brainwave propagation across lobes)
-    if (pointsRef.current && t - lastColorUpdateRef.current >= 1 / 24) {
+    if (pointsRef.current) {
       const geometry = pointsRef.current.geometry;
       const colorAttr = geometry.getAttribute("color") as THREE.BufferAttribute;
       if (colorAttr) {
@@ -394,7 +393,6 @@ export function ChromeMesh() {
           array[i * 3 + 2] = Math.min(1, baseColor.b * intensity);
         }
         colorAttr.needsUpdate = true;
-        lastColorUpdateRef.current = t;
       }
     }
 
@@ -509,3 +507,4 @@ export function ChromeMesh() {
     </group>
   );
 }
+

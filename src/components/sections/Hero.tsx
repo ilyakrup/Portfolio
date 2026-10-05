@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import { portfolioData } from "@/data/portfolio";
 import { ArrowDown, Sparkles, Send, Layers } from "lucide-react";
@@ -21,34 +21,6 @@ const HeroCanvas = dynamic(
 
 export function Hero() {
   const { developer } = portfolioData;
-  const [show3D, setShow3D] = useState(false);
-
-  useEffect(() => {
-    const desktopQuery = window.matchMedia(
-      "(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
-    );
-
-    let loadTimer: number | undefined;
-
-    const update3DVisibility = () => {
-      if (!desktopQuery.matches) {
-        setShow3D(false);
-        return;
-      }
-
-      loadTimer = window.setTimeout(() => setShow3D(true), 300);
-    };
-
-    update3DVisibility();
-    desktopQuery.addEventListener("change", update3DVisibility);
-
-    return () => {
-      desktopQuery.removeEventListener("change", update3DVisibility);
-      if (loadTimer !== undefined) {
-        window.clearTimeout(loadTimer);
-      }
-    };
-  }, []);
 
   return (
     <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center pt-24 pb-16 px-4 overflow-hidden">
@@ -122,20 +94,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="lg:col-span-5 relative w-full h-[380px] sm:h-[460px] lg:h-[540px] flex items-center justify-center"
         >
-          {show3D ? (
-            <HeroCanvas />
-          ) : (
-            <div
-              className="hero-visual-fallback relative w-full h-full flex items-center justify-center overflow-hidden"
-              aria-label="Декоративная графика"
-              role="img"
-            >
-              <div className="absolute w-64 h-64 rounded-full bg-gradient-to-tr from-cyan-500/20 via-blue-500/30 to-purple-500/20 blur-3xl" />
-              <div className="relative w-44 h-44 rounded-full border border-white/20 bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center shadow-[0_0_80px_rgba(56,189,248,0.12)]">
-                <div className="w-24 h-24 rounded-full bg-white/10 border border-white/30" />
-              </div>
-            </div>
-          )}
+          <HeroCanvas />
 
           {/* Interactive hint floating badge */}
           <div className="absolute bottom-2 right-4 pointer-events-none hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg glass-panel text-[11px] font-mono text-zinc-400 border border-white/10 shadow-lg">
